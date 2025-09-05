@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FYNTEK Scrollable Gallery</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
+
+body, html {
+    width:100%;
+    min-height:100%;
+    background: url('images/background.gif') no-repeat center center fixed;
+    background-size: cover;
+    color:#000000;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+body::before {
+    content:"";
+    position: fixed; top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(173,216,230,0.1);
+    z-index:0;
+}
+
+body { opacity:0; transition: opacity 1.5s ease-in-out; }
+body.loaded { opacity:1; }
+
+/* Neon rainbow text for FYNTEK header */
+.rainbow-neon {
+    font-weight: bold;
+    font-size: 80px;
+    background: linear-gradient(270deg, #00ffff, #ff0000);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: neonGradient 6s ease infinite;
+    text-align:center;
+    text-shadow: 0 0 5px #00ffff,0 0 10px #ff0000,0 0 20px #00ffff,0 0 30px #ff0000;
+}
+.rainbow-neon span {
+    display:block;
+    font-size:28px;
+    font-weight: normal;
+    background: linear-gradient(270deg, #00ffff, #ff0000);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: neonGradient 6s ease infinite;
+    text-shadow: 0 0 5px #00ffff,0 0 10px #ff0000,0 0 20px #00ffff,0 0 30px #ff0000;
+}
+
+/* Neon white text for section titles */
+.neon-white {
+    color:#fff;
+    text-align:center;
+    text-shadow:
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 20px #fff,
+        0 0 30px #fff;
+}
+
+/* Keyframes for rainbow gradient animation */
+@keyframes neonGradient {
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* Gallery Section */
+.gallery-section {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:40px;
+    position:relative;
+    z-index:1;
+    width: 100%;
+}
+.gallery-row { display:flex; justify-content:center; gap:20px; width: 100%; }
+
+/* Image container */
+.image-container {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+}
+.image-container img {
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    object-fit:cover;
+    box-shadow: 0 0 15px #FF0000,0 0 25px #1E90FF,0 0 35px #FF0000,0 0 50px #1E90FF;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor:pointer;
+    animation: floatUpDown 4s ease-in-out infinite;
+}
+.image-container span {
+    margin-top:8px;
+    color:#fff;
+    font-size:18px;
+    font-weight:bold;
+    animation: floatUpDown 4s ease-in-out infinite;
+}
+.image-container img:hover, .image-container span:hover {
+    transform: scale(1.25);
+    animation-play-state: paused;
+    box-shadow: 0 0 30px #FF0000,0 0 50px #1E90FF,0 0 70px #FF0000,0 0 100px #1E90FF;
+}
+
+@keyframes floatUpDown {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Footer audio info */
+.audio-info {
+    position:fixed;
+    bottom:20px;
+    width:100%;
+    text-align:center;
+    font-size:18px;
+    color:#aaa;
+    z-index:10;
+}
+
+#loader {
+    position:fixed; top:0; left:0;
+    width:100%; height:100%;
+    background:#111;
+    display:flex; justify-content:center; align-items:center;
+    color:#fff; font-size:24px;
+    z-index:1000;
+}
+
+/* Sparkle canvas */
+#sparkleCanvas {
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    pointer-events:none;
+    z-index:15;
+}
+</style>
+</head>
+<body>
+
+<div id="loader">Loading FYNTEK...</div>
+
+<!-- Header -->
+<div id="mainHeader" class="rainbow-neon">
+    FYNTEK
+    <span>discord.gg/fyntek</span>
+</div>
+
+<div class="gallery-section">
+
+    <h1 class="neon-white">Holders</h1>
+
+    <!-- Pyramid Top -->
+    <div class="gallery-row">
+        <div class="image-container"><img src="images/image1.jpg"><span>Dark</span></div>
+    </div>
+
+    <div class="gallery-row">
+        <div class="image-container"><img src="images/image2.jpg"><span>Cyruz</span></div>
+        <div class="image-container"><img src="images/image3.jpg"><span>Hellmerry</span></div>
+        <div class="image-container"><img src="images/image4.jpg"><span>Storm</span></div>
+    </div>
+
+    <h2 class="neon-white">MEMBERS</h2>
+
+    <!-- Members Pyramid -->
+    <div class="gallery-row">
+        <div class="image-container"><img src="images/image5.jpg"><span>Alpha</span></div>
+        <div class="image-container"><img src="images/image6.jpg"><span>Beta</span></div>
+        <div class="image-container"><img src="images/image7.jpg"><span>Gamma</span></div>
+        <div class="image-container"><img src="images/image8.jpg"><span>Delta</span></div>
+        <div class="image-container"><img src="images/image9.jpg"><span>Epsilon</span></div>
+    </div>
+
+    <div class="gallery-row">
+        <div class="image-container"><img src="images/image10.jpg"><span>Zeta</span></div>
+        <div class="image-container"><img src="images/image11.jpg"><span>Eta</span></div>
+        <div class="image-container"><img src="images/image12.jpg"><span>Theta</span></div>
+        <div class="image-container"><img src="images/image13.jpg"><span>Iota</span></div>
+        <div class="image-container"><img src="images/image14.jpg"><span>Kappa</span></div>
+    </div>
+
+    <div class="gallery-row">
+        <div class="image-container"><img src="images/image15.jpg"><span>Lambda</span></div>
+        <div class="image-container"><img src="images/image16.jpg"><span>Mu</span></div>
+        <div class="image-container"><img src="images/image17.jpg"><span>Nu</span></div>
+        <div class="image-container"><img src="images/image18.jpg"><span>Xi</span></div>
+        <div class="image-container"><img src="images/image19.jpg"><span>Omicron</span></div>
+    </div>
+
+    <div class="gallery-row">
+        <div class="image-container"><img src="images/image20.jpg"><span>Pi</span></div>
+        <div class="image-container"><img src="images/image21.jpg"><span>Rho</span></div>
+        <div class="image-container"><img src="images/image22.jpg"><span>Sigma</span></div>
+    </div>
+
+</div>
+
+<div class="audio-info">Now Playing: Your Track Name</div>
+
+<audio id="bgMusic" loop autoplay>
+    <source src="music/song.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="sparkleCanvas"></canvas>
+
+<script>
+window.addEventListener('load',()=>{
+    document.body.classList.add('loaded');
+    document.getElementById('loader').style.display='none';
+    const audio=document.getElementById('bgMusic');
+    audio.volume=0.3;
+    audio.play().catch(()=>console.log("Autoplay blocked."));
+});
+document.body.addEventListener('click',()=>{const audio=document.getElementById('bgMusic');if(audio.paused) audio.play();});
+
+// Sparkle effect
+const canvas=document.getElementById('sparkleCanvas');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+let mouse={x:0,y:0},sparkles=[];
+document.addEventListener('mousemove',e=>{
+    mouse.x=e.clientX; mouse.y=e.clientY;
+    for(let i=0;i<3;i++){
+        sparkles.push({
+            x:mouse.x+(Math.random()*20-10),
+            y:mouse.y+(Math.random()*20-10),
+            size:Math.random()*3+2,
+            life:30+Math.random()*20
+        });
+    }
+});
+function animateSparkles(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(let i=0;i<sparkles.length;i++){
+        const s=sparkles[i];
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
+        ctx.fillStyle=`rgba(173,216,230, ${s.life/50})`;
+        ctx.fill();
+        s.y-=0.5;
+        s.life--;
+        if(s.life<=0)sparkles.splice(i,1),i--;
+    }
+    requestAnimationFrame(animateSparkles);
+}
+animateSparkles();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
+</script>
+
+</body>
+</html>
